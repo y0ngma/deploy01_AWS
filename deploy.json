@@ -1,7 +1,7 @@
 {
-    "REPO_URL":"https://github.com/kenshi/de",
-    "PROJECT_NAME":"de",
-    "REMOTE_HOST":"ec2-54-180-116-168.ap-northeast-2.compute.amazonaws.com",
-    "REMOTE_HOST_SSH":"54.180.116.168",
+    "REPO_URL":"https://github.com/y0ngma/deploy01_AWS",
+    "PROJECT_NAME":"deploy01_AWS",
+    "REMOTE_HOST":"13.125.237.86",
+    "REMOTE_HOST_SSH":"13.125.237.86",
     "REMOTE_USER":"ubuntu"
   }
