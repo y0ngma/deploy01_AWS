@@ -36,14 +36,15 @@ deploy 첫배포
     flask==1.0.2
     ```
 
-## 구동
-- 파이선 3 버전 기반으로 수행
-- 운영체계 및 서버 세팅 및 배포, 업데이트 관리 등등을 자동화하는 모듈 => fabric3  
+## 첫 구동
+1. 파이선 3 버전 기반으로 수행
+1. 운영체계 및 서버 세팅 및 배포, 업데이트 관리 등등을   
+    자동화하는 모듈 => fabric3  
     `$ pip3 install fabric3`
-- git에 최종소스 반영
-- `$ fab new_server`
+1. git에 최종소스 반영
+1. `$ fab new_server`
     - 중간에 y, git login 등이 나올수있다
-- 브라우저 13.125.237.86 접속
+1. 브라우저 13.125.237.86 접속
 
 ## 로그 확인 (리눅스에서 확인)
 - 실시간 에러 로그 확인
@@ -71,12 +72,14 @@ deploy 첫배포
                     - Source        : 0.0.0.0/0(자동)
                 - Description : flask server
 
-## 가상호스트가 설정도니 부분
+## 가상호스트가 설정된 부분
 - deploy는 프로젝트명(deploy.json의)
 - /etc/apache2/sites-available/deploy.conf
 - 파일읽기  
-    $ cat /etc/apache2/sites-available/deploy.conf
-    ```py
+    - 다음을 입력 `cat /etc/apache2/sites-available/deploy.conf`
+    ```py 
+    # 우분투에서 다음과 같이 나온다
+    ubuntu@ip-172-31-46-157:~$ cat /etc/apache2/sites-available/deploy.conf
     <VirtualHost *:80>
     ServerName ec2-13-125-237-86.ap-northeast-2.compute.amazonaws.com
     <Directory /home/ubuntu/deploy>

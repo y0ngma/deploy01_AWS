@@ -102,7 +102,7 @@ def _ufw_allow():
     sudo("ufw reload")
 
 
-## ServerName {servername} 
+## ServerName {servername} 중요
 def _make_virtualhost():
     script = """'<VirtualHost *:80>
     ServerName {servername} 
