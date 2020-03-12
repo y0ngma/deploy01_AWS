@@ -19,13 +19,14 @@ deploy 첫배포
     리눅스 접속 계정 ID 등 설정
     ```json
     {
-        "REPO_URL":"https://github.com/y0ngma/deploy01_AWS",
         // 자신의 깃주소 (~.git 빼고)
+        "REPO_URL":"https://github.com/y0ngma/deploy01_AWS",
+        // 원하는 프로젝트명
         "PROJECT_NAME":"deploy01_AWS",
-        "REMOTE_HOST":"13.125.237.86",
-        // "REMOTE_HOST":"ec2-54-180-116-168.ap-northeast-2.compute.amazonaws.com", //자신의 ip로 대체
-        "REMOTE_HOST_SSH":"13.125.237.86",
+        //자신의 DNS로 대체
+        "REMOTE_HOST":"ec2-13-125-237-86.ap-northeast-2.compute.amazonaws.com", 
         // 자신의 ip로 대체
+        "REMOTE_HOST_SSH":"13.125.237.86",
         "REMOTE_USER":"ubuntu"
     }
     ```
@@ -33,11 +34,50 @@ deploy 첫배포
     - 본 서비스를 구동하기 위해 사용된 모든 파이썬 패키지를 기술한다.
     ```
     flask==1.0.2
-    pandas==0.25.1
     ```
 
 ## 구동
 - 파이선 3 버전 기반으로 수행
 - 운영체계 및 서버 세팅 및 배포, 업데이트 관리 등등을 자동화하는 모듈 => fabric3  
-`$ pip3 install fabric3`
+    `$ pip3 install fabric3`
 - git에 최종소스 반영
+- `$ fab new_server`
+    - 중간에 y, git login 등이 나올수있다
+- 브라우저 13.125.237.86 접속
+
+## 접속로그 확인 (리눅스에서 확인)
+- 오류를 확인 가능
+    ```py
+    # ubuntu에서
+    cd deploy01_AWS # 으로 이동
+    tail -f /var/apache2/access.log 
+    # 로그확인:port80으로 접속자체가 안되어 아무 기록이 없음
+    # inbound rule에서 허용하도록 rule 추가하기
+    ```
+- 인스턴스 정보판에서 
+    - 보안그룹의 launch-wizard-1
+        - Edit inbound rules
+        1. Inbound rule 1
+            - Type : SSH
+                - Port range    : 22 (자동)
+            - Source type       : anywhere
+                - Source        : 0.0.0.0/0, ::/0(자동)
+        1. Inbound rule 2 
+            - Type : HTTP 
+                - Port range    : 80 (자동)
+            - Source type       : anywhere                
+                - Source        : 0.0.0.0/0(자동)
+            - Description : flask server
+
+## 잘 안될때
+- 소스코드상에 파일명, 설정값등이 서로 물려 있으므로 오타가 없아야함
+- 깃에 그러한 최종 소스가 모두 반영되어야함
+- 리눅스에서 기존의 흔적을 모두 제거
+    ```py  
+    다음경로로 이동     : /home/ubuntu
+    # deploy.json의 "PROJECT_NAME"이 프로젝트명이다
+    프로젝트삭제        : rm -r -f deploy01_AWS
+    숨김파일까지 다확인 : ls -a
+    모든가상환경삭제    : rm -r -f .virtualenvs
+    로컬 PC에서 fab설치 : fab
+    ```
