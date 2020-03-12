@@ -101,9 +101,11 @@ def _ufw_allow():
     sudo("ufw allow 'Apache Full'")
     sudo("ufw reload")
 
+
+## ServerName {servername} 
 def _make_virtualhost():
     script = """'<VirtualHost *:80>
-    ServerName {servername}
+    ServerName {servername} 
     <Directory /home/{username}/{project_name}>
         <Files wsgi.py>
             Require all granted

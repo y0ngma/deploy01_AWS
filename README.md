@@ -45,29 +45,60 @@ deploy 첫배포
     - 중간에 y, git login 등이 나올수있다
 - 브라우저 13.125.237.86 접속
 
-## 접속로그 확인 (리눅스에서 확인)
-- 오류를 확인 가능
+## 로그 확인 (리눅스에서 확인)
+- 실시간 에러 로그 확인
+    tail -f /var/log/apache2/error.log 
+- 실시간 접속 로그 확인
+    - 중단시 ctrl C
     ```py
-    # ubuntu에서
-    cd deploy01_AWS # 으로 이동
-    tail -f /var/apache2/access.log 
+    # ubuntu 어느 경로에서든
+    tail -f /var/log/apache2/access.log 
     # 로그확인:port80으로 접속자체가 안되어 아무 기록이 없음
     # inbound rule에서 허용하도록 rule 추가하기
     ```
-- 인스턴스 정보판에서 
-    - 보안그룹의 launch-wizard-1
-        - Edit inbound rules
-        1. Inbound rule 1
-            - Type : SSH
-                - Port range    : 22 (자동)
-            - Source type       : anywhere
-                - Source        : 0.0.0.0/0, ::/0(자동)
-        1. Inbound rule 2 
-            - Type : HTTP 
-                - Port range    : 80 (자동)
-            - Source type       : anywhere                
-                - Source        : 0.0.0.0/0(자동)
-            - Description : flask server
+    - 인스턴스 정보판에서 
+        - 보안그룹의 launch-wizard-1
+            - Edit inbound rules
+            1. Inbound rule 1
+                - Type : SSH
+                    - Port range    : 22 (자동)
+                - Source type       : anywhere
+                    - Source        : 0.0.0.0/0, ::/0(자동)
+            1. Inbound rule 2 
+                - Type : HTTP 
+                    - Port range    : 80 (자동)
+                - Source type       : anywhere                
+                    - Source        : 0.0.0.0/0(자동)
+                - Description : flask server
+
+## 가상호스트가 설정도니 부분
+- deploy는 프로젝트명(deploy.json의)
+- /etc/apache2/sites-available/deploy.conf
+- 파일읽기  
+    $ cat /etc/apache2/sites-available/deploy.conf
+    ```py
+    <VirtualHost *:80>
+    ServerName ec2-13-125-237-86.ap-northeast-2.compute.amazonaws.com
+    <Directory /home/ubuntu/deploy>
+        <Files wsgi.py>
+            Require all granted
+        </Files>
+    </Directory>
+    WSGIDaemonProcess deploy python-home=/home/ubuntu/.virtualenvs/deploy python-path=/home/ubuntu/deploy
+    WSGIProcessGroup deploy
+    WSGIScriptAlias / /home/ubuntu/deploy/wsgi.py # 시작점
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+    ```
+
+
+## 이후 작업 순서(꼭 지키기)
+1. 코드수정
+1. git 반영 먼저 후
+1. $ fab deploy 배포
+1. 
+
 
 ## 잘 안될때
 - 소스코드상에 파일명, 설정값등이 서로 물려 있으므로 오타가 없아야함
