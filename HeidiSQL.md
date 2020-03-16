@@ -123,21 +123,6 @@ L service
             );
     ```
 
-### HeidiSQL에서 AWS 연결
-- 파일 밑의 코드접속 아이콘 (세션관리자)
-    1. 신규 - aws
-    1. 호스트명 : 엔드포인트 복사 붙여넣기
-        - RDS의 데이터베이스 연결&보안에 있다
-    1. 사용자   :root
-    2. 암호     :8자리
-    3. 데이터베이스 드롭다운 메뉴클릭(안될시 인바운드 막힌것)
-        - python_db 선택
-        - 안될시
-            - aws 서버의 보안에서 퍼블릭엑세스 가능성 확인
-            - inbound rules의 Source에 적힌 IP만 접속허용이다.
-            - Edit inbound rules 에서 0.0.0.0/32 추가(모두허용)       
-    4. 저장-열기
-
 ## AWS
 ### 서버 프리티어 세부설정 : 추가과금 방지하기
 - **상단 서비스텝 클릭**
@@ -189,6 +174,22 @@ L service
     - 데이터베이스 삭제하는법
         - 우클릭 `상태 - 종료(terminate)`
 
+### HeidiSQL에서 AWS 연결
+- 파일 밑의 코드접속 아이콘 (세션관리자)
+    1. 신규 - aws
+    1. 호스트명 : 엔드포인트 복사 붙여넣기
+        - RDS의 데이터베이스 연결&보안에 있다
+    1. 사용자   :root
+    2. 암호     :8자리
+    3. 데이터베이스 드롭다운 메뉴클릭(안될시 인바운드 막힌것)
+        - python_db 선택
+        - 안될시
+            - aws 서버의 보안에서 퍼블릭엑세스 가능성 확인
+            - inbound rules의 Source에 적힌 IP만 접속허용이다.
+            - Edit inbound rules 에서 0.0.0.0/32 추가(anywhere)       
+    4. 저장-열기
+### putty setup
+- AWS의 EC2생성시 키페어.pem을 다운로드
 ### putty 프로그램 다운로드
 - https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
 1. putty.exe (the SSH and Telnet client itself)
@@ -220,6 +221,7 @@ L service
     4. putty 재 시작시 
         1. 저장된 aws 를 Load 
         1. Open
+
 ### ubuntu
 - 우분투 실행창에서 경로 확인해보기
 ```py
