@@ -22,7 +22,7 @@ deploy 첫배포
         // 자신의 깃주소 (~.git 빼고)
         "REPO_URL":"https://github.com/y0ngma/deploy01_AWS",
         // 원하는 프로젝트명
-        "PROJECT_NAME":"deploy01_AWS",
+        "PROJECT_NAME":"deploy",
         //자신의 DNS로 대체
         "REMOTE_HOST":"ec2-13-125-237-86.ap-northeast-2.compute.amazonaws.com", 
         // 자신의 ip로 대체
