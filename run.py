@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'aws3 homepage'
+    return 'aws4 homepage'
 
 if __name__=='__main__':
     app.run( debug=True )
