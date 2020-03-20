@@ -213,13 +213,13 @@ L service
 1. putty 실행
     - Ubuntu 열어보기
     1. 첫화면Session에서
-        1. Host Name : ubuntu@자신의 IPv4 퍼블릭 IP
+        1. Host Name : ubuntu@자신의 퍼블릭DNS(IPv4) IP
         2. `Saved Session`에 aws적고 Save 클릭
     1. SSH
         1. Auth
             1. browse 본인 ppk 파일 선택
     2. Window
-        1. Appearance
+        1. Appearance - font size 설정
     3. 다시 Session 에서
         1. aws Save 눌러서 SSH 설정 저장
         2. Open 후 실행확인
